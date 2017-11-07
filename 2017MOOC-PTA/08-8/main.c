@@ -49,7 +49,7 @@ LGraph createGraph(int vertexNum) {
     
     for (v = 0; v < graph->nv; v++) {
         graph->g[v].firstEdge = NULL;
-        graph->g[v].earlist = INFINITY;
+        graph->g[v].earlist = 0;
     }
     
     return graph;
@@ -129,9 +129,9 @@ int topSort(LGraph graph, Vetex topOrder[]) {
         for (w = graph->g[v].firstEdge; w; w = w->next) {
             if (--indegree[w->adjV] == 0) {
                 queue[tail++] = w->adjV;
-                if (graph->g[v].earlist + w->weight < graph->g[w->adjV].earlist) {
-                    graph->g[w->adjV].earlist = graph->g[v].earlist + w->weight;
-                }
+            }
+            if (graph->g[v].earlist + w->weight > graph->g[w->adjV].earlist) {
+                graph->g[w->adjV].earlist = graph->g[v].earlist + w->weight;
             }
         }
     }
