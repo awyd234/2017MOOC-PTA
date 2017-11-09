@@ -56,7 +56,7 @@ int main(int argc, const char * argv[]) {
         printf("Merge Sort\n");
         flag = 1;
         for (i = 2; i < n && flag; i *= 2) {
-            for (j = 0; j + i < n && flag; j += i) {
+            for (j = 0; j + i <= n && flag; j += i) {
                 for (k = j; k < j + i - 1; k++) {
                     if (partial[k] > partial[k + 1]) {
                         flag = 0;
@@ -64,8 +64,11 @@ int main(int argc, const char * argv[]) {
                     }
                 }
             }
+            if (!flag) {
+                break;
+            }
         }
-        i = i / 2;
+        //i = i / 2;
         for (j = 0; j + i < n; j += i) {
             qsort(partial + j, i, sizeof(int), cmp);
         }
